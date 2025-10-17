@@ -1,0 +1,10 @@
+rich-birds-backend/
+├─ package.json
+├─ server.js
+├─ db.js
+├─ routes/
+│  ├─ verify.js
+│  ├─ telegram.js
+│  └─ admin.js
+├─ public/ (optional admin UI)
+└─ README.md
