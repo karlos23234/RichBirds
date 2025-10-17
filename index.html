@@ -1,0 +1,101 @@
+<!-- index.html (frontend) -->
+<!doctype html>
+<html lang="hy">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rich Birds — Telegram Web App</title>
+  <meta name="description" content="Rich Birds — Telegram Web App with TRC20 deposit UI and Telegram Login" />
+  <style>
+    /* (compacted styling similar to the file I created earlier) */
+    :root{--bg:#f6f7fb;--card:#fff;--accent:#4CAF50;--muted:#6c757d}
+    *{box-sizing:border-box} body{font-family:Inter,system-ui,Segoe UI,Arial; margin:0; background:linear-gradient(135deg,#f8fafc,#ffffff); color:#222}
+    .wrap{max-width:420px;margin:20px auto;padding:18px}.card{background:var(--card);border-radius:14px;padding:14px;margin-top:14px;box-shadow:0 6px 18px rgba(16,24,40,0.06);}
+    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}.btn-primary{background:linear-gradient(90deg,var(--accent),#2eb67d);color:#fff}.small{font-size:13px;color:var(--muted)}
+    .wallet-box{font-family:monospace;background:#f4f6f8;padding:10px;border-radius:8px;word-break:break-all}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div style="font-size:30px">🐦💰</div>
+      <div>
+        <h1 style="margin:0;font-size:22px">Rich Birds</h1>
+        <div class="small">Telegram Web App — Web + Telegram</div>
+      </div>
+    </div>
+
+    <div class="card" id="main">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="small">Ձեր մնացորդը</div>
+          <div id="balance" style="font-weight:700;font-size:20px">0 ֏</div>
+        </div>
+        <div>
+          <button class="btn btn-primary" id="tgOpen">Open in Telegram</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="small">TRC20 USDT հասցե</div>
+        <div class="wallet-box" id="usdtAddr">TWzZVoKptLx3KJfshfmkNnFtC3kY2LVi4M</div>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button class="btn btn-primary" id="copy">Copy</button>
+          <button class="btn" id="pay">I paid - check</button>
+        </div>
+        <input id="tx" placeholder="TxID կամ screenshot link" style="width:100%;margin-top:8px;padding:8px;border-radius:8px;border:1px solid #eee">
+        <div id="status" style="margin-top:10px;color:#666"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between">
+        <div>
+          <div class="small">Profile</div>
+          <div id="username">Not logged</div>
+        </div>
+        <div>
+          <button class="btn btn-primary" id="loginBtn">Login (Telegram)</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;font-size:12px;color:#777">
+      Հաջորդ քայլեր՝ host this repo to GitHub Pages and set BotFather WebApp URL to the published URL.
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'https://YOUR_BACKEND_DOMAIN/api'; // <-- change after deploy
+    document.getElementById('copy').addEventListener('click', async ()=>{
+      try { await navigator.clipboard.writeText(document.getElementById('usdtAddr').textContent); alert('Copied'); }
+      catch(e){ alert('Copy failed'); }
+    });
+
+    document.getElementById('pay').addEventListener('click', async ()=>{
+      const tx = document.getElementById('tx').value.trim();
+      if(!tx){ document.getElementById('status').textContent = 'Գրեք Tx ID'; return; }
+      document.getElementById('status').textContent = 'Ուղարկվում՝ ստուգման...';
+      try {
+        const res = await fetch(API_BASE + '/verify-trx', {
+          method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({txid: tx})
+        });
+        const j = await res.json();
+        if(j.ok){ document.getElementById('status').textContent = 'Tx հաստատված. Բալանսը թարմացվեց.'; fetchBalance(); }
+        else document.getElementById('status').textContent = 'Tx Ցույց տվեց սխալ: ' + (j.error || '');
+      } catch(e){ document.getElementById('status').textContent = 'Network error'; }
+    });
+
+    async function fetchBalance(){
+      try{
+        const r = await fetch(API_BASE + '/user-info'); const j = await r.json();
+        if(j.ok) document.getElementById('balance').textContent = j.balance + ' ֏';
+      }catch(e){}
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', ()=>{ window.open('https://t.me/richbirds_bot', '_blank'); });
+    // Optional: if used inside Telegram WebApp, use Telegram.WebApp initData to send to backend for secure login.
+    fetchBalance();
+  </script>
+</body>
+</html>
