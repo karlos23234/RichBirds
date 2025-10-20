@@ -419,9 +419,9 @@ body {
     align-items: center;
     height: 100vh;
     background: linear-gradient(to right, #89f7fe, #66a6ff);
-    overflow: hidden;
-    position: relative;
     margin: 0;
+    position: relative;
+    overflow: hidden;
 }
 
 #clickBtn {
@@ -431,8 +431,6 @@ body {
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5) inset;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -440,25 +438,24 @@ body {
 }
 
 #clickBtn img {
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 #clickBtn:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 25px rgba(255,255,255,0.7) inset;
 }
 
 #clickBtn:active {
     transform: scale(0.95);
-    box-shadow: 0 6px 10px rgba(0,0,0,0.2), 0 0 15px rgba(255,255,255,0.4) inset;
 }
 
 .particle {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     background: yellow;
     border-radius: 50%;
     pointer-events: none;
@@ -481,12 +478,11 @@ body {
 let totalMoney = 0;
 
 function earnMoney(e) {
-    totalMoney += 1; // Յուրաքանչյուր սեղմումով գումարը մեծանում է 1
+    totalMoney += 1;
     createParticle(e.clientX, e.clientY);
-    alert(`Դուք ստացաք մի փոքր գումար! 💰 Մաքսիմալ գումար՝ ${totalMoney}`);
+    alert(`Դուք ստացաք մի փոքր գումար! 💰 Գումարը: ${totalMoney}`);
 }
 
-// Փոքր «թռուցիկներ»
 function createParticle(x, y) {
     for(let i=0; i<5; i++){
         let p = document.createElement('div');
@@ -497,6 +493,10 @@ function createParticle(x, y) {
         setTimeout(() => p.remove(), 1000);
     }
 }
+</script>
+
+</body>
+</html>
 
 
                 </div>
