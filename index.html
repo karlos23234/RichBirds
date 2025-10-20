@@ -407,7 +407,7 @@
 
             <div class="earning-section">
                 <h2 class="earning-title">Կտտացրու և վաստակիր</h2>
-                <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hy">
 <head>
 <meta charset="UTF-8">
@@ -419,6 +419,9 @@ body {
     align-items: center;
     height: 100vh;
     background: linear-gradient(to right, #89f7fe, #66a6ff);
+    overflow: hidden;
+    position: relative;
+    margin: 0;
 }
 
 #clickBtn {
@@ -430,10 +433,10 @@ body {
     height: 200px;
     background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
     box-shadow: 0 8px 15px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5) inset;
-    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 #clickBtn img {
@@ -452,31 +455,49 @@ body {
     box-shadow: 0 6px 10px rgba(0,0,0,0.2), 0 0 15px rgba(255,255,255,0.4) inset;
 }
 
-@keyframes glow {
-    0% { box-shadow: 0 0 20px #fffa; }
-    50% { box-shadow: 0 0 35px #fff; }
-    100% { box-shadow: 0 0 20px #fffa; }
+.particle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: yellow;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: rise 1s forwards;
 }
 
-#clickBtn {
-    animation: glow 2s infinite;
+@keyframes rise {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
 }
 </style>
 </head>
 <body>
 
-<button id="clickBtn" onclick="earnMoney()">
+<button id="clickBtn" onclick="earnMoney(event)">
     <img src="https://static.wikia.nocookie.net/angrybirds/images/b/b4/Newgameabb2.png/revision/latest?cb=20250605163329" alt="Click to Earn">
 </button>
 
 <script>
-function earnMoney() {
-    alert("Դուք ստացաք մի փոքր գումար! 💰");
-}
-</script>
+let totalMoney = 0;
 
-</body>
-</html>
+function earnMoney(e) {
+    totalMoney += 1; // Յուրաքանչյուր սեղմումով գումարը մեծանում է 1
+    createParticle(e.clientX, e.clientY);
+    alert(`Դուք ստացաք մի փոքր գումար! 💰 Մաքսիմալ գումար՝ ${totalMoney}`);
+}
+
+// Փոքր «թռուցիկներ»
+function createParticle(x, y) {
+    for(let i=0; i<5; i++){
+        let p = document.createElement('div');
+        p.classList.add('particle');
+        p.style.left = (x + (Math.random()*40-20)) + 'px';
+        p.style.top = (y + (Math.random()*40-20)) + 'px';
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1000);
+    }
+}
+
 
                 </div>
                 <div class="earnings-display">
