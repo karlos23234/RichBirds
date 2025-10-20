@@ -408,6 +408,7 @@
             <div class="earning-section">
                 <h2 class="earning-title">Կտտացրու և վաստակիր</h2>
                 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hy">
 <head>
 <meta charset="UTF-8">
@@ -418,60 +419,46 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #89f7fe, #66a6ff);
+    background: #eef2f5;
 }
 
 #clickBtn {
     border: none;
     outline: none;
     cursor: pointer;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5) inset;
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-radius: 15px;
+    width: 250px;
+    height: 100px;
+    padding: 0;
+    background: none;
+    transition: transform 0.2s;
 }
 
 #clickBtn img {
-    width: 80%;
-    height: 80%;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 15px;
 }
 
 #clickBtn:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 25px rgba(255,255,255,0.7) inset;
 }
 
 #clickBtn:active {
     transform: scale(0.95);
-    box-shadow: 0 6px 10px rgba(0,0,0,0.2), 0 0 15px rgba(255,255,255,0.4) inset;
-}
-
-@keyframes glow {
-    0% { box-shadow: 0 0 20px #fffa; }
-    50% { box-shadow: 0 0 35px #fff; }
-    100% { box-shadow: 0 0 20px #fffa; }
-}
-
-#clickBtn {
-    animation: glow 2s infinite;
 }
 </style>
 </head>
 <body>
 
-<button id="clickBtn" onclick="earnMoney()">
-    <img src="https://banner2.cleanpng.com/20180320/vze/av0noshxg.webp" alt="Click to Earn">
+<button id="clickBtn" onclick="startGame()">
+    <img src="https://static.wikia.nocookie.net/angrybirds/images/b/b4/Newgameabb2.png/revision/latest?cb=20250605163329" alt="Start Game">
 </button>
 
 <script>
-function earnMoney() {
-    alert("Դուք ստացաք մի փոքր գումար! 💰");
+function startGame() {
+    alert("Խաղը սկսվում է! 🐦");
 }
 </script>
 
