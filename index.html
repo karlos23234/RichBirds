@@ -7,241 +7,137 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 body {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e1b4b 100%);
-    color: white;
-    height: 100%;
-    overflow-x: hidden;
-    -webkit-user-select: none;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background-image: url('https://static4.depositphotos.com/1005091/369/i/450/depositphotos_3690514-stock-illustration-country-landscape-with-sun.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  height: 100%;
+  overflow-x: hidden;
 }
 .container {
-    max-width: 420px;
-    margin: 0 auto;
-    padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom)) 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: max(20px, env(safe-area-inset-top)) 15px max(20px, env(safe-area-inset-bottom)) 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.logo {
-    font-size: 3rem;
-    margin-bottom: 5px;
-}
-.title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #FFD700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
+.header {text-align: center; margin-bottom: 15px;}
+.logo {font-size: 3rem; margin-bottom: 5px;}
+.title {font-size: 2rem; font-weight: bold; color:#FFD700; text-shadow:2px 2px 4px rgba(0,0,0,0.3);}
 .balance-card {
-    width: 100%;
-    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 15px;
-    text-align: center;
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+  width: 100%; text-align: center; padding: 15px; margin-bottom: 15px;
+  border-radius: 12px; backdrop-filter: blur(5px); background: rgba(0,0,0,0.3);
 }
-.balance-amount {
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    margin-bottom: 15px;
-}
-.btn {
-    flex: 1;
-    padding: 12px 0;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.btn-deposit { background: linear-gradient(135deg, #10b981, #059669); color: white; }
-.btn-withdraw { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-.earn-section {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 15px;
-}
-.money-bag {
-    width: 120px;
-    height: 120px;
-    cursor: pointer;
-    margin: 0 auto;
-    position: relative;
-    transition: transform 0.2s;
-}
-.money-bag:active { transform: scale(1.1); }
-.earn-animation {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: bold;
-    font-size: 1rem;
-    color: #fbbf24;
-    animation: floatUp 1s ease-out forwards;
-}
-@keyframes floatUp { 0% { opacity: 1; transform: translate(-50%,0); } 100% { opacity: 0; transform: translate(-50%,-50px); } }
-.daily-section, .tasks-section, .mission-section {
-    width: 100%;
-    background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-.section-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
-.task-item, .mission-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 12px; margin-bottom: 8px; background: rgba(255,255,255,0.05); }
-.task-btn, .video-btn { padding: 6px 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 0.9rem; font-weight: 500; background: linear-gradient(135deg,#3b82f6,#1d4ed8); color: white; }
-.video-btn:hover, .task-btn:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
-.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); display: flex; justify-content: space-around; padding: 8px 0; border-top-left-radius: 20px; border-top-right-radius: 20px; backdrop-filter: blur(12px); }
-.nav-item { font-size: 0.85rem; color: #1f2937; text-align: center; cursor: pointer; }
+.balance-amount { font-size: 2rem; font-weight:700; background: linear-gradient(135deg,#fbbf24,#f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.action-buttons {display: flex; gap: 10px; width: 100%; margin-bottom: 15px;}
+.btn {flex:1; padding:10px 0; border:none; border-radius:12px; font-weight:bold; cursor:pointer; transition:all 0.3s;}
+.btn-deposit {background: linear-gradient(135deg,#10b981,#059669); color:white;}
+.btn-withdraw {background: linear-gradient(135deg,#ef4444,#dc2626); color:white;}
+.btn:hover {transform:translateY(-2px); box-shadow:0 5px 15px rgba(0,0,0,0.3);}
+.earn-section {width:100%; text-align:center; margin-bottom:15px; position:relative;}
+.money-bag {width:120px;height:120px; cursor:pointer; margin:0 auto; position:relative; transition: transform 0.2s;}
+.money-bag:active {transform: scale(1.1);}
+.earn-animation {position:absolute; top:0; left:50%; transform:translateX(-50%); font-weight:bold; font-size:1rem; color:#fbbf24; animation: floatUp 1s ease-out forwards;}
+@keyframes floatUp {0%{opacity:1; transform:translate(-50%,0);}100%{opacity:0; transform:translate(-50%,-50px);}}
+.section-title {font-size:1.2rem; font-weight:600; margin-bottom:10px;}
+.tasks-section, .mission-section, .daily-section {width:100%; background:rgba(0,0,0,0.3); backdrop-filter:blur(5px); border-radius:12px; padding:12px; margin-bottom:12px;}
+.task-item, .mission-item {display:flex; justify-content:space-between; align-items:center; padding:8px; border-radius:10px; margin-bottom:6px; background:rgba(255,255,255,0.1);}
+.task-btn, .video-btn {padding:6px 10px; border-radius:8px; border:none; cursor:pointer; font-size:0.9rem; font-weight:500; background: linear-gradient(135deg,#3b82f6,#1d4ed8); color:white;}
+.video-btn:hover, .task-btn:hover {transform:translateY(-1px); box-shadow:0 3px 10px rgba(0,0,0,0.2);}
+.bottom-nav {position:fixed; bottom:0; left:0; right:0; background:rgba(255,255,255,0.95); display:flex; justify-content:space-around; padding:8px 0; border-top-left-radius:20px; border-top-right-radius:20px; backdrop-filter:blur(12px);}
+.nav-item {font-size:0.85rem; color:#1f2937; text-align:center; cursor:pointer;}
 </style>
 </head>
 <body>
 <div class="container">
-<div class="header">
-    <div class="logo">🐦</div>
-    <div class="title">Rich Birds</div>
-</div>
-
-<div class="balance-card">
-    <div class="balance-amount" id="balance">0 դրամ</div>
-    <div class="balance-label">Հաշիվ</div>
-</div>
-
+<div class="header"><div class="logo">🐦</div><div class="title">Rich Birds</div></div>
+<div class="balance-card"><div class="balance-amount" id="balance">0 դրամ</div></div>
 <div class="action-buttons">
-    <button class="btn btn-deposit" onclick="deposit()">Գումար լցնել</button>
-    <button class="btn btn-withdraw" onclick="withdraw()">Հանել գումարը</button>
+  <button class="btn btn-deposit" onclick="deposit()">Գումար լցնել</button>
+  <button class="btn btn-withdraw" onclick="withdraw()">Հանել գումարը</button>
 </div>
 
 <div class="earn-section">
-    <div class="section-title">Հավաքեք դրամ՝ կտտացնելով</div>
-    <img src="https://png.pngtree.com/png-vector/20250927/ourlarge/pngtree-rich-money-bag-icon-png-image_17605053.webp" class="money-bag" id="moneyBag" onclick="earnMoney()">
+  <div class="section-title">Հավաքեք դրամ՝ կտտացնելով</div>
+  <img src="https://png.pngtree.com/png-vector/20250927/ourlarge/pngtree-rich-money-bag-icon-png-image_17605053.webp" class="money-bag" id="moneyBag" onclick="earnMoney()">
 </div>
 
 <div class="daily-section">
-    <div class="section-title">Օրական պարգև</div>
-    <div id="dailyRewardDisplay">+0 դրամ</div>
+  <div class="section-title">Օրական պարգև</div>
+  <div id="dailyRewardDisplay">+0 դրամ</div>
 </div>
 
 <div class="tasks-section">
-    <div class="section-title">Առաջադրանքներ</div>
-    <div class="task-item">
-        <div>Կիսվել ընկերոջ հետ</div>
-        <button class="task-btn" onclick="shareReferral()">Կատարել</button>
-    </div>
+  <div class="section-title">Առաջադրանքներ</div>
+  <div class="task-item"><div>Կիսվել ընկերոջ հետ</div><button class="task-btn" onclick="shareReferral()">Կատարել</button></div>
 </div>
 
 <div class="mission-section">
-    <div class="section-title">Video Missions</div>
-    <div id="missionsContainer"></div>
+  <div class="section-title">Video Missions</div>
+  <div id="missionsContainer"></div>
 </div>
 </div>
 
 <div class="bottom-nav">
-    <div class="nav-item">Home</div>
-    <div class="nav-item">Mission</div>
-    <div class="nav-item">Referral</div>
+  <div class="nav-item">Home</div>
+  <div class="nav-item">Mission</div>
+  <div class="nav-item">Referral</div>
 </div>
 
 <script>
-let balance = 0;
-let clickCount = 0;
-let lastClickTime = 0;
-const MAX_CLICKS = 150;
-const CLICK_VALUE = 100;
+let balance=0, clickCount=0, lastClickTime=0;
+const MAX_CLICKS=150, CLICK_VALUE=100;
+const moneyBag=document.getElementById('moneyBag');
 
-const moneyBag = document.getElementById('moneyBag');
+function updateBalance(){document.getElementById('balance').textContent=`${balance} դրամ`;}
 
-function updateBalance() {
-    document.getElementById('balance').textContent = `${balance} դրամ`;
+function earnMoney(){
+  const now=new Date().getTime();
+  if(now-lastClickTime>3600000){clickCount=0; lastClickTime=now;}
+  if(clickCount>=MAX_CLICKS){alert('Օգտագործողը լրացրել է այս ժամի սահմանը'); return;}
+  balance+=CLICK_VALUE; clickCount++; lastClickTime=new Date().getTime();
+  createEarnAnimation(CLICK_VALUE); updateBalance();
+  localStorage.setItem('balance', balance); localStorage.setItem('clickCount', clickCount); localStorage.setItem('lastClickTime', lastClickTime);
 }
 
-function earnMoney() {
-    const now = new Date().getTime();
-    if (now - lastClickTime > 3600000) { clickCount = 0; lastClickTime = now; }
-    if (clickCount >= MAX_CLICKS) { alert('Օգտագործողը լրացրել է այս ժամի սահմանը'); return; }
-    balance += CLICK_VALUE;
-    clickCount++;
-    createEarnAnimation(CLICK_VALUE);
-    updateBalance();
-    localStorage.setItem('balance', balance);
-    localStorage.setItem('clickCount', clickCount);
-    localStorage.setItem('lastClickTime', lastClickTime);
+function createEarnAnimation(amount){
+  const anim=document.createElement('div');
+  anim.className='earn-animation'; anim.textContent=`+${amount} դրամ`;
+  moneyBag.parentElement.appendChild(anim); setTimeout(()=>anim.remove(),1000);
 }
 
-function createEarnAnimation(amount) {
-    const anim = document.createElement('div');
-    anim.className = 'earn-animation';
-    anim.textContent = `+${amount} դրամ`;
-    moneyBag.parentElement.appendChild(anim);
-    setTimeout(()=>anim.remove(),1000);
-}
+function deposit(){let d=prompt('Ներմուծեք գումարը'); if(d && !isNaN(d)){balance+=parseInt(d); updateBalance(); alert(`${d} դրամ լցվեց հաջողությամբ`);}}
+function withdraw(){let w=prompt('Ներմուծեք հանվող գումարը'); if(w && !isNaN(w)){w=parseInt(w); if(w>balance){alert('Գումարը բավարար չէ');} else{balance-=w; updateBalance(); alert(`${w} դրամ հանվեց հաջողությամբ`);}}}
 
-function deposit() {
-    let depositAmount = prompt('Ներմուծեք գումարը');
-    if(depositAmount && !isNaN(depositAmount)) { balance += parseInt(depositAmount); updateBalance(); alert(`${depositAmount} դրամ լցվեց հաջողությամբ`); }
-}
-
-function withdraw() {
-    let withdrawAmount = prompt('Ներմուծեք հանվող գումարը');
-    if(withdrawAmount && !isNaN(withdrawAmount)) {
-        withdrawAmount=parseInt(withdrawAmount);
-        if(withdrawAmount>balance){alert('Գումարը բավարար չէ');}else{balance-=withdrawAmount;updateBalance();alert(`${withdrawAmount} դրամ հանվեց հաջողությամբ`);}
-    }
-}
-
-function shareReferral() {
-    alert('Շնորհակալություն ընկերոջ հետ կիսվելու համար! Դուք ստացաք +500 դրամ');
-    balance += 500;
-    updateBalance();
-}
+function shareReferral(){alert('Շնորհակալություն ընկերոջ հետ կիսվելու համար! Դուք ստացաք +500 դրամ'); balance+=500; updateBalance();}
 
 // Video Missions
-const videoList = [];
-for(let i=1;i<=30;i++){videoList.push(`https://www.youtube.com/embed/dQw4w9WgXcQ?video=${i}`);}
+const videoList=[]; for(let i=1;i<=30;i++){videoList.push(`https://www.youtube.com/embed/dQw4w9WgXcQ?video=${i}`);}
+const watchedVideos=JSON.parse(localStorage.getItem('watchedVideos')||'{}');
 function loadMissions(){
-    const container = document.getElementById('missionsContainer');
-    videoList.forEach((url,i)=>{
-        const div=document.createElement('div');
-        div.className='mission-item';
-        div.innerHTML=`<div>Video Mission ${i+1}</div><button class='video-btn' onclick='watchVideo(${i})'>Watch & Earn</button>`;
-        container.appendChild(div);
-    });
+  const container=document.getElementById('missionsContainer');
+  videoList.forEach((url,i)=>{
+    const div=document.createElement('div');
+    div.className='mission-item';
+    div.innerHTML=`<div>Video Mission ${i+1}</div><button class='video-btn' onclick='watchVideo(${i})'>Watch & Earn</button>`;
+    container.appendChild(div);
+  });
 }
-
 function watchVideo(index){
-    balance += 1500;
-    updateBalance();
-    alert(`+1500 դրամ ստացվեց Video Mission-ից`);
+  if(watchedVideos[index]){alert('Դուք արդեն դիտել եք այս video-ն'); return;}
+  alert('Դիտում ավարտված՝ +1500 դրամ'); balance+=1500; updateBalance();
+  watchedVideos[index]=true; localStorage.setItem('watchedVideos', JSON.stringify(watchedVideos));
 }
 
-loadMissions();
-updateBalance();
+updateBalance(); loadMissions();
 </script>
 </body>
 </html>
+
 
 
 
