@@ -1,160 +1,128 @@
 <!DOCTYPE html>
 <html lang="hy">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RichRise — Կանխիկ</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RichRise Mini App</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen font-sans">
 
-  <header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 sticky top-0">
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 sticky top-0 z-20">
     <div class="max-w-3xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-purple-600 font-bold">R</div>
-        <h1 class="text-lg font-semibold">RichRise — Կանխիկ</h1>
+        <h1 class="text-lg font-semibold">RichRise</h1>
       </div>
       <div class="text-right">
         <div class="text-sm opacity-80">@User12897</div>
-        <div id="headerBalance" class="text-lg font-bold">֏8,000</div>
+        <div id="headerTotal" class="text-lg font-bold">֏0</div>
       </div>
     </div>
   </header>
 
   <main class="max-w-3xl mx-auto p-4 space-y-4">
 
-    <!-- Balance card -->
+    <!-- Earnings Stats -->
+    <section class="bg-white rounded-2xl shadow p-4 grid grid-cols-2 gap-4">
+      <div class="p-4 bg-green-100 rounded-lg text-center cursor-pointer" onclick="earnTask()">
+        <div class="text-xl">📋</div>
+        <div class="text-lg font-bold" id="taskCount">0</div>
+        <div class="text-sm">Առաջադրանք</div>
+        <div class="text-sm text-gray-600">֏2,000 per task</div>
+      </div>
+      <div class="p-4 bg-blue-100 rounded-lg text-center cursor-pointer" onclick="earnReferral()">
+        <div class="text-xl">👥</div>
+        <div class="text-lg font-bold" id="referralCount">0</div>
+        <div class="text-sm">Հրավիրված</div>
+        <div class="text-sm text-gray-600">֏4,000 per referral</div>
+      </div>
+      <div class="p-4 bg-red-100 rounded-lg text-center cursor-pointer" onclick="earnVideo()">
+        <div class="text-xl">📺</div>
+        <div class="text-lg font-bold" id="videoCount">0</div>
+        <div class="text-sm">Տեսանյութ</div>
+        <div class="text-sm text-gray-600">֏2,300 per video</div>
+      </div>
+      <div class="p-4 bg-yellow-100 rounded-lg text-center cursor-pointer" onclick="earnDaily()">
+        <div class="text-xl">🎯</div>
+        <div class="text-lg font-bold" id="dailyCount">0</div>
+        <div class="text-sm">Ամենօրյա նպատակներ</div>
+        <div class="text-sm text-gray-600">Բոնուս</div>
+      </div>
+    </section>
+
+    <!-- Total Earnings -->
+    <section class="bg-white rounded-2xl shadow p-4 text-center">
+      <h2 class="text-gray-800 font-semibold">Ընդհանուր եկամուտ</h2>
+      <div id="totalEarnings" class="text-2xl font-bold mt-2">֏0</div>
+    </section>
+
+    <!-- Referral Link -->
     <section class="bg-white rounded-2xl shadow p-4">
-      <div class="flex items-start justify-between">
-        <div>
-          <h2 class="text-gray-700 font-semibold">Ընթացիկ մնացորդ</h2>
-          <div id="balanceDisplay" class="text-3xl font-bold text-green-600 mt-2">֏8 000</div>
-        </div>
-
-        <div class="text-right">
-          <div id="verifiedBadge" class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-sm font-medium">Չվավերացված</div>
-          <div class="mt-3 text-sm text-gray-500">Նվազագույն պահանջ՝ <strong>֏80,000</strong></div>
-        </div>
+      <h3 class="font-semibold text-gray-800 mb-2">Ձեր հաշվետվության հղումը</h3>
+      <div class="bg-gray-100 p-2 rounded text-sm break-words mb-2">
+        <span id="referralLink">https://t.me/richrisebot/app?startapp=r_8187899888</span>
       </div>
-
-      <div class="mt-4 flex gap-3">
-        <button onclick="openDeposit()" class="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">💳 Լիցքավորել</button>
-        <button onclick="openWithdraw()" class="flex-1 bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700">💸 Հանել</button>
-        <button onclick="startManualVerify()" class="px-3 py-2 border rounded-lg text-sm">🔎 Վավերացնել TXID-ով</button>
-      </div>
-
-      <p class="mt-3 text-sm text-gray-600">
-        Ծրագիր. պարտադիր <strong>լիցքավորման նվազագույնը ֏2,500</strong>՝ հաշվի ակտիվացման և մարդ-չի-ը ռոբոտ ստուգման համար։
-        Հանման մինիմումը՝ <strong>֏150,000</strong> (թույլատրվում միայն վավերացված օգտատերերի համար)։
+      <button onclick="copyReferral()" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+        📋 Կիսվել
+      </button>
+      <p class="text-gray-600 text-sm mt-2">
+        Վաստակեք ֏4,000 յուրաքանչյուր հաջող գրանցման համար<br>
+        Եվ ստացեք 10% այն եկամուտից, որը վաստակում է հրավիրած օգտատերը
       </p>
-    </section>
-
-    <!-- Verification helper -->
-    <section id="verifyInfo" class="bg-white rounded-2xl shadow p-4 hidden">
-      <h3 class="font-semibold text-gray-800">Վավերացնել տրանսկցիան՝ ստուգման համար</h3>
-      <p class="text-sm text-gray-600 mt-1">Եթե դուք արդեն կատարել եք լիցք՝ մուտքագրեք տրանսկցիայի TXID-ը (օր.՝ Tron/TRC20 TXID).</p>
-      <div class="mt-3 flex gap-2">
-        <input id="txInput" class="flex-1 border rounded-lg px-3 py-2" placeholder="Տվեք TXID (օր.)">
-        <button onclick="submitTxForVerify()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Ամփոփել</button>
-        <button onclick="closeVerifyInfo()" class="px-3 py-2 border rounded-lg">Փակել</button>
-      </div>
-      <p class="mt-2 text-sm text-gray-500">(Նշում. ներկայում՝ ցանկացած ոչ-փակ txID կմարկի որպես վավեր)</p>
-    </section>
-
-    <!-- First-payment / progress -->
-    <section class="bg-white rounded-2xl shadow p-4">
-      <h3 class="font-semibold text-gray-800">Առաջին հաշվարկի պահանջ</h3>
-      <div class="mt-2">
-        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-          <div id="progressBar" class="h-3 bg-green-500 rounded-full" style="width: 10%"></div>
-        </div>
-        <div class="mt-2 text-sm text-gray-600" id="progressText">8000 / 80000</div>
-      </div>
-    </section>
-
-    <!-- Transaction history -->
-    <section class="bg-white rounded-2xl shadow p-4">
-      <div class="flex items-center justify-between">
-        <h3 class="font-semibold text-gray-800">Վճարումների մատյան</h3>
-        <div class="text-sm text-gray-500">Ամսաթիվ՝ ժամանակով</div>
-      </div>
-
-      <div id="txList" class="mt-3 space-y-2"></div>
-
-      <div id="noTx" class="mt-3 text-sm text-gray-500">Ձեր հաշվարկների մասին գրառումներ չկան։</div>
     </section>
 
   </main>
 
   <script>
-    const MIN_DEPOSIT = 2500;
-    const MIN_WITHDRAW = 150000;
-    const FIRST_TARGET = 80000;
+    // Initialization
+    const LOCAL = 'richrise_data';
+    const DEFAULT = {task:0, referral:0, video:0, daily:0};
+    let data = JSON.parse(localStorage.getItem(LOCAL) || JSON.stringify(DEFAULT));
 
-    const LS_BALANCE = 'rr_balance';
-    const LS_TX = 'rr_transactions';
-    const LS_VERIFIED = 'rr_verified';
+    const PRICES = {task:2000, referral:4000, video:2300, daily:1000}; // Daily bonus 1000
+    const ids = {task:'taskCount', referral:'referralCount', video:'videoCount', daily:'dailyCount', total:'totalEarnings', header:'headerTotal'};
 
-    function initDefaults() {
-      if (!localStorage.getItem(LS_BALANCE)) localStorage.setItem(LS_BALANCE,'8000');
-      if (!localStorage.getItem(LS_TX)) localStorage.setItem(LS_TX,'[]');
-      if (!localStorage.getItem(LS_VERIFIED)) localStorage.setItem(LS_VERIFIED,'false');
+    function updateUI() {
+      document.getElementById(ids.task).innerText = data.task;
+      document.getElementById(ids.referral).innerText = data.referral;
+      document.getElementById(ids.video).innerText = data.video;
+      document.getElementById(ids.daily).innerText = data.daily;
+      const total = data.task*PRICES.task + data.referral*PRICES.referral + data.video*PRICES.video + data.daily*PRICES.daily;
+      document.getElementById(ids.total).innerText = '֏' + total.toLocaleString('hy-AM');
+      document.getElementById(ids.header).innerText = '֏' + total.toLocaleString('hy-AM');
     }
 
-    function fmt(num){ return Number(num).toLocaleString('hy-AM'); }
+    function saveData() {
+      localStorage.setItem(LOCAL, JSON.stringify(data));
+      updateUI();
+    }
 
-    function showToast(msg, timeout=2200){
+    // Earnings actions
+    function earnTask(){ data.task++; saveData(); showToast('Առաջադրանք կատարված է! +֏2,000'); }
+    function earnReferral(){ data.referral++; saveData(); showToast('Հրավիրումը հաջողվեց! +֏4,000'); }
+    function earnVideo(){ data.video++; saveData(); showToast('Տեսանյութ դիտվեց! +֏2,300'); }
+    function earnDaily(){ data.daily++; saveData(); showToast('Ամենօրյա նպատակ կատարված է! +֏1,000'); }
+
+    function copyReferral(){
+      const link = document.getElementById('referralLink').innerText;
+      navigator.clipboard.writeText(link).then(()=>{showToast('Հղումը պատճենվել է! 📋');});
+    }
+
+    function showToast(msg){
       const t=document.createElement('div');
       t.className='fixed left-1/2 -translate-x-1/2 top-24 bg-black text-white px-4 py-2 rounded-lg shadow z-50';
-      t.textContent=msg; document.body.appendChild(t);
-      setTimeout(()=>{t.style.opacity='0'; setTimeout(()=>t.remove(),300);},timeout);
+      t.innerText=msg; document.body.appendChild(t);
+      setTimeout(()=>{t.remove();},2000);
     }
 
-    function updateUI(){
-      const balance=parseInt(localStorage.getItem(LS_BALANCE)||0,10);
-      document.getElementById('balanceDisplay').innerText=`֏${fmt(balance)}`;
-      document.getElementById('headerBalance').innerText=`֏${fmt(balance)}`;
-      const verified = localStorage.getItem(LS_VERIFIED) === 'true';
-      const badge=document.getElementById('verifiedBadge');
-      badge.innerText = verified ? 'Վավերացված' : 'Չվավերացված';
-      badge.className = verified ? 'px-3 py-1 rounded-full bg-green-100 text-green-800 text-sm font-medium'
-                                 : 'px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-sm font-medium';
-      const percent=Math.min(Math.round((balance/FIRST_TARGET)*100),100);
-      document.getElementById('progressBar').style.width=percent+'%';
-      document.getElementById('progressText').innerText=`${fmt(balance)} / ${fmt(FIRST_TARGET)}`;
-      renderTxList();
-    }
+    updateUI();
+  </script>
 
-    function loadTx(){ try{return JSON.parse(localStorage.getItem(LS_TX)||'[]')}catch(e){return[]}}
-    function saveTx(arr){localStorage.setItem(LS_TX,JSON.stringify(arr))}
-    function addTransaction({type,amount,note='',txid=null}){
-      const arr=loadTx();
-      arr.unshift({id:Date.now(),type,amount:Number(amount),note,txid,time:new Date().toISOString()});
-      saveTx(arr); updateUI();
-    }
+</body>
+</html>
 
-    function renderTxList(){
-      const arr=loadTx();
-      const wrapper=document.getElementById('txList'); wrapper.innerHTML='';
-      if(!arr||arr.length===0){document.getElementById('noTx').style.display='block'; return;}
-      document.getElementById('noTx').style.display='none';
-      arr.forEach(tx=>{
-        const el=document.createElement('div');
-        el.className='border rounded-lg p-3 flex justify-between items-start';
-        el.innerHTML=`<div><div class="text-sm text-gray-600">${new Date(tx.time).toLocaleString()}</div>
-        <div class="font-semibold ${tx.type==='deposit'?'text-green-600':'text-red-600'} mt-1">
-        ${tx.type==='deposit'?'Լիցքավորում':'Հանում'} — ֏${fmt(tx.amount)}</div>
-        <div class="text-xs text-gray-500 mt-1">${tx.note||''}${tx.txid?' • TXID: '+tx.txid:''}</div></div>
-        <div class="text-right text-xs"><div class="text-gray-500">${tx.id}</div></div>`;
-        wrapper.appendChild(el);
-      })
-    }
-
-    function openDeposit(){
-      const input=prompt(`Մուտքագրեք լիցքավորման գումարը (նվազագույն ֏${MIN_DEPOSIT})`,MIN_DEPOSIT);
-      if(input===null)return;
-      const amount=parseInt(input.replace(/\s+/g,''),10);
-      if(isNaN(amount)||amount<=0){showToast
 
 
 
