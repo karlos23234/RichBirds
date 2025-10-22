@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
-// If you want to integrate with Telegram Mini Apps SDK:
-// import { useSDK } from '@telegram-apps/sdk-react';
+import React, { useState } from 'react';
 
 function App() {
-  const [referralLink, setReferralLink] = useState('https://t.me/richrisebot/app?startap...');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [referralLink, setReferralLink] = useState('https://t.me/richrisebot/app?startapp=r_8187899888');
   const [copied, setCopied] = useState(false);
-
-  // Optional: Initialize Telegram Mini Apps SDK
-  // const { init } = useSDK();
-  // useEffect(() => {
-  //   init();
-  // }, [init]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralLink);
@@ -18,45 +11,107 @@ function App() {
     setTimeout(() => setCopied(false), 2000); // Reset "Copied!" message after 2 seconds
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const languages = [
+    "English", "Русский", "Português", "Español", "Deutsch", "Français", "Türkçe",
+    "العربية", "Tiếng Việt", "日本語", "বাংলা", "हिंदी", "Indonesia", "اردو",
+    "Swahili", "Українська", "Filipino", "Bahasa Melayu", "한국어", "فարسی"
+  ];
+
   return (
     <div className="relative min-h-screen bg-background text-gray-800 pb-20"> {/* pb-20 for bottom nav */}
       {/* Header */}
       <header className="bg-primary text-white p-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <button className="text-2xl">☰</button> {/* Menu Icon */}
+          <button onClick={toggleSidebar} className="text-2xl">☰</button> {/* Menu Icon */}
           <h1 className="text-xl font-bold">RichRise</h1>
         </div>
-        <div className="flex items-center space-x-4">
-          <span className="text-2xl">🌐</span> {/* Globe Icon */}
-          <span className="text-2xl">👤</span> {/* User Icon */}
-          <button className="text-2xl">⋮</button> {/* More Options Icon */}
-          <button className="text-2xl">✕</button> {/* Close Icon */}
+        <div className="flex flex-col items-end">
+          <span className="text-sm">@User12897</span>
+          <span className="text-lg font-semibold">֏8 000</span>
         </div>
       </header>
 
+      {/* Sidebar (Drawer) */}
+      <div
+        className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-30 transform ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } transition-transform duration-300 ease-in-out overflow-y-auto`}
+      >
+        <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+          <h2 className="text-xl font-bold text-primary">RichRise Menu</h2>
+          <button onClick={toggleSidebar} className="text-gray-600 text-2xl">✕</button>
+        </div>
+        <nav className="p-4 space-y-2">
+          <h3 className="text-md font-semibold text-gray-700 mb-2">Փոխել լեզուն</h3>
+          <ul className="space-y-1 text-sm text-gray-600">
+            {languages.map((lang, index) => (
+              <li key={index} className="py-1 px-2 hover:bg-gray-100 rounded cursor-pointer">{lang}</li>
+            ))}
+          </ul>
+
+          <div className="pt-4 border-t border-gray-200 mt-4">
+            <ul className="space-y-1 text-base text-gray-800 font-medium">
+              <li className="py-1 px-2 hover:bg-gray-100 rounded cursor-pointer">Գլխավոր</li>
+              <li className="py-1 px-2 hover:bg-gray-100 rounded cursor-pointer">Մեր մասին</li>
+              <li className="py-1 px-2 hover:bg-gray-100 rounded cursor-pointer">Հաճախ տրվող հարցեր</li>
+              <li className="py-1 px-2 hover:bg-gray-100 rounded cursor-pointer">Վկայություններ</li>
+              <li className="py-1 px-2 hover:bg-gray-100 rounded cursor-pointer">Գաղտնության Քաղաքականություն</li>
+              <li className="py-1 px-2 hover:bg-gray-100 rounded cursor-pointer text-secondary">Գնա վաստակիր</li>
+            </ul>
+          </div>
+
+          <div className="pt-4 border-t border-gray-200 mt-4">
+            <h3 className="text-md font-semibold text-gray-700 mb-2">Կապվեք մեզ հետ</h3>
+            <p className="text-sm text-gray-600">support@richrise.com</p>
+          </div>
+
+          <div className="pt-4 border-t border-gray-200 mt-4 text-center">
+            <p className="text-sm text-gray-600 mb-2">Բացեք եկամտի հնարավորություններ RichRise-ով</p>
+            <button className="bg-secondary text-white px-4 py-2 rounded-lg font-semibold">Սկսեք հիմա</button>
+          </div>
+        </nav>
+      </div>
+
+      {/* Overlay for sidebar */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-20"
+          onClick={toggleSidebar}
+        ></div>
+      )}
+
       {/* Main Content */}
       <main className="p-4 space-y-4">
-        {/* Report Statistics Section */}
-        <section className="bg-white rounded-lg shadow-sm p-4">
-          <div className="flex items-center mb-4">
-            <span className="text-xl mr-2">👥</span> {/* People icon */}
-            <h2 className="text-lg font-semibold">Հաշվետվությունների վիճակագրություն</h2>
-          </div>
-          <div className="bg-gray-100 rounded-lg p-4">
-            <p className="text-sm text-gray-600">Հաշվետվության բոնուս</p>
-            <p className="text-2xl font-bold">Դ0</p>
-          </div>
+        {/* Total Earnings Summary */}
+        <section className="bg-white rounded-lg shadow-sm p-4 text-center">
+          <p className="text-sm text-gray-600">Ընդհանուր եկամուտներ</p>
+          <p className="text-3xl font-bold text-primary">֏8 000</p>
         </section>
 
-        {/* Summary Cards */}
-        <section className="grid grid-cols-2 gap-4">
-          <div className="bg-white rounded-lg shadow-sm p-4">
-            <p className="text-sm text-gray-600">Ընդհանուր հաշվետվություններ</p>
-            <p className="text-2xl font-bold">0</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-sm p-4 flex items-center justify-center">
-            <span className="text-xl mr-2">❓</span> {/* Question mark icon */}
-            <p className="text-sm text-primary font-medium">Օգնության ուղեցույց է պե՞տք:</p>
+        {/* Balance and Earnings Breakdown */}
+        <section className="bg-white rounded-lg shadow-sm p-4 space-y-3">
+          <h2 className="text-lg font-semibold mb-2">Մնացորդ: <span className="text-primary">֏8 000</span></h2>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center text-sm">
+              <span>Առաջադրանք</span>
+              <span>֏2 000 per task <span className="font-bold">0</span></span>
+            </div>
+            <div className="flex justify-between items-center text-sm">
+              <span>Հրավիրված</span>
+              <span>֏4 000 per referral <span className="font-bold">0</span></span>
+            </div>
+            <div className="flex justify-between items-center text-sm">
+              <span>Տեսանյութ</span>
+              <span>֏2 300 per video <span className="font-bold">0</span></span>
+            </div>
+            <div className="flex justify-between items-center text-sm font-semibold pt-2 border-t border-gray-100">
+              <span>Ընդհանուր եկամուտ</span>
+              <span className="text-primary">֏8 000</span>
+            </div>
           </div>
         </section>
 
@@ -80,9 +135,44 @@ function App() {
           <p className="text-sm text-gray-600 mb-2">
             Բացեք հսկայական եկամտի ներուժը հաշվետվություններով:
           </p>
-          <p className="text-sm text-gray-600">
-            Ընդլայնեք Ձեր եկամտի հորիզոնները RichRise-ով՝ հաշվետվությունները կատարելով:
+          <p className="text-sm text-gray-600 mb-4">
+            Ընդլայնեք Ձեր եկամտի հորիզոնները RichRise-ով՝ հաշվետվություն կատարելով Ձեր ընկերներին, ընտանիքին կամ հետևորդներին մեր հարթակ: Ահա, թե ինչ եք ստանում:
           </p>
+          <ul className="list-disc list-inside text-sm text-gray-700 space-y-1 mb-4">
+            <li>Վաստակեք լրացուցիչ ֏4 000 յուրաքանչյուր հաջող գրանցման համար:</li>
+            <li>Եթե Ձեր հրավիրած օգտատերը գումար է վաստակում, Դուք նույնպես ստանում եք այդ գումարի 10%-ը որպես պարգև:</li>
+          </ul>
+          <button className="bg-secondary text-white px-4 py-2 rounded-lg font-semibold w-full">Կիսվել</button>
+        </section>
+
+        {/* Actions to Take Section */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-bold text-gray-800">Կատարվող գործողություններ</h2>
+          <p className="text-sm text-gray-600">Ամեն օր գումար վաստակելու բազմաթիվ եղանակներ կան:</p>
+
+          {/* Earning Method Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white rounded-lg shadow-sm p-4 space-y-2">
+              <h3 className="text-md font-semibold">Փորձարկեք հավելվածներ և խաղեր</h3>
+              <p className="text-sm text-gray-600">Վաստակեք գումար՝ փորձարկելով անվճար հավելվածներ և խաղեր, ինչպես նաև կիսվելով Ձեր կարծիքով:</p>
+              <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm w-full">Ավարտեք առաջադրանքները</button>
+            </div>
+            <div className="bg-white rounded-lg shadow-sm p-4 space-y-2">
+              <h3 className="text-md font-semibold">Հաշվետվություն ընկերոջը</h3>
+              <p className="text-sm text-gray-600">Հրավիրեք Ձեր ընկերներին և վաստակեք ֏4 000 յուրաքանչյուր հաշվետվության համար:</p>
+              <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm w-full">Հրավիրեք հիմա</button>
+            </div>
+            <div className="bg-white rounded-lg shadow-sm p-4 space-y-2">
+              <h3 className="text-md font-semibold">Դիտեք տեսանյութ</h3>
+              <p className="text-sm text-gray-600">Դիտեք տեսանյութեր և վաստակեք ֏2 300 յուրաքանչյուր տեսանյութի համար:</p>
+              <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm w-full">Դիտեք տեսանյութ</button>
+            </div>
+            <div className="bg-white rounded-lg shadow-sm p-4 space-y-2">
+              <h3 className="text-md font-semibold">Ամենօրյա նպատակներ</h3>
+              <p className="text-sm text-gray-600">Գումար վաստակեք՝ հասնելով հաշվետվությունների նպատակին</p>
+              <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm w-full">Հասեք նպատակներին</button>
+            </div>
+          </div>
         </section>
       </main>
 
@@ -103,16 +193,16 @@ function App() {
           <div className="absolute -bottom-1 w-10 h-1 bg-primary rounded-t-full"></div> {/* Active indicator */}
         </div>
         <div className="flex flex-col items-center text-gray-500">
-          <span className="text-2xl">📍</span> {/* Center icon (placeholder) */}
-          <span className="text-xs">Կենտրոն</span>
+          <span className="text-2xl">🎯</span> {/* Task Center icon (placeholder) */}
+          <span className="text-xs">Առաջադրանքների Կենտրոն</span>
         </div>
         <div className="flex flex-col items-center text-gray-500">
           <span className="text-2xl">▶️</span> {/* Video icon */}
           <span className="text-xs">Տեսանյութ</span>
         </div>
         <div className="flex flex-col items-center text-gray-500">
-          <span className="text-2xl">💲</span> {/* Cash icon */}
-          <span className="text-xs">Կանխիկ</span>
+          <span className="text-2xl">💳</span> {/* Payment icon (placeholder) */}
+          <span className="text-xs">Վճարում</span>
         </div>
       </nav>
 
