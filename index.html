@@ -1,15 +1,130 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Youware App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+import React, { useState, useEffect } from 'react';
+// If you want to integrate with Telegram Mini Apps SDK:
+// import { useSDK } from '@telegram-apps/sdk-react';
+
+function App() {
+  const [referralLink, setReferralLink] = useState('https://t.me/richrisebot/app?startap...');
+  const [copied, setCopied] = useState(false);
+
+  // Optional: Initialize Telegram Mini Apps SDK
+  // const { init } = useSDK();
+  // useEffect(() => {
+  //   init();
+  // }, [init]);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(referralLink);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000); // Reset "Copied!" message after 2 seconds
+  };
+
+  return (
+    <div className="relative min-h-screen bg-background text-gray-800 pb-20"> {/* pb-20 for bottom nav */}
+      {/* Header */}
+      <header className="bg-primary text-white p-4 flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <button className="text-2xl">☰</button> {/* Menu Icon */}
+          <h1 className="text-xl font-bold">RichRise</h1>
+        </div>
+        <div className="flex items-center space-x-4">
+          <span className="text-2xl">🌐</span> {/* Globe Icon */}
+          <span className="text-2xl">👤</span> {/* User Icon */}
+          <button className="text-2xl">⋮</button> {/* More Options Icon */}
+          <button className="text-2xl">✕</button> {/* Close Icon */}
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="p-4 space-y-4">
+        {/* Report Statistics Section */}
+        <section className="bg-white rounded-lg shadow-sm p-4">
+          <div className="flex items-center mb-4">
+            <span className="text-xl mr-2">👥</span> {/* People icon */}
+            <h2 className="text-lg font-semibold">Հաշվետվությունների վիճակագրություն</h2>
+          </div>
+          <div className="bg-gray-100 rounded-lg p-4">
+            <p className="text-sm text-gray-600">Հաշվետվության բոնուս</p>
+            <p className="text-2xl font-bold">Դ0</p>
+          </div>
+        </section>
+
+        {/* Summary Cards */}
+        <section className="grid grid-cols-2 gap-4">
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <p className="text-sm text-gray-600">Ընդհանուր հաշվետվություններ</p>
+            <p className="text-2xl font-bold">0</p>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm p-4 flex items-center justify-center">
+            <span className="text-xl mr-2">❓</span> {/* Question mark icon */}
+            <p className="text-sm text-primary font-medium">Օգնության ուղեցույց է պե՞տք:</p>
+          </div>
+        </section>
+
+        {/* Referral Link Section */}
+        <section className="bg-white rounded-lg shadow-sm p-4">
+          <h2 className="text-lg font-semibold mb-4">Ձեր հաշվետվության հղումը</h2>
+          <div className="flex items-center space-x-2 mb-4">
+            <input
+              type="text"
+              readOnly
+              value={referralLink}
+              className="flex-grow bg-gray-100 border border-gray-300 rounded-lg p-2 text-sm text-gray-700"
+            />
+            <button
+              onClick={handleCopy}
+              className="bg-primary text-white p-2 rounded-lg flex items-center justify-center w-10 h-10"
+            >
+              {copied ? '✅' : '📋'} {/* Copy icon or checkmark */}
+            </button>
+          </div>
+          <p className="text-sm text-gray-600 mb-2">
+            Բացեք հսկայական եկամտի ներուժը հաշվետվություններով:
+          </p>
+          <p className="text-sm text-gray-600">
+            Ընդլայնեք Ձեր եկամտի հորիզոնները RichRise-ով՝ հաշվետվությունները կատարելով:
+          </p>
+        </section>
+      </main>
+
+      {/* Floating Action Button (FAB) */}
+      <button className="fixed bottom-24 right-4 bg-secondary text-white rounded-full p-4 shadow-lg z-20">
+        <span className="text-3xl">💎</span> {/* Diamond icon */}
+      </button>
+
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-16 shadow-lg z-10">
+        <div className="flex flex-col items-center text-gray-500">
+          <span className="text-2xl">🏠</span> {/* Home icon */}
+          <span className="text-xs">Գլխավոր</span>
+        </div>
+        <div className="flex flex-col items-center text-primary relative">
+          <span className="text-2xl">👥</span> {/* Invite icon */}
+          <span className="text-xs">Հրավեր</span>
+          <div className="absolute -bottom-1 w-10 h-1 bg-primary rounded-t-full"></div> {/* Active indicator */}
+        </div>
+        <div className="flex flex-col items-center text-gray-500">
+          <span className="text-2xl">📍</span> {/* Center icon (placeholder) */}
+          <span className="text-xs">Կենտրոն</span>
+        </div>
+        <div className="flex flex-col items-center text-gray-500">
+          <span className="text-2xl">▶️</span> {/* Video icon */}
+          <span className="text-xs">Տեսանյութ</span>
+        </div>
+        <div className="flex flex-col items-center text-gray-500">
+          <span className="text-2xl">💲</span> {/* Cash icon */}
+          <span className="text-xs">Կանխիկ</span>
+        </div>
+      </nav>
+
+      {/* Footer */}
+      <footer className="fixed bottom-0 left-0 right-0 text-center text-xs text-gray-500 bg-white py-1 z-0">
+        @richrisebot
+      </footer>
+    </div>
+  );
+}
+
+export default App;
 
 
 
