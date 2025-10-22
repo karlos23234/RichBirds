@@ -1,224 +1,658 @@
 <!DOCTYPE html>
 <html lang="hy">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RichRise Mini App</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body { box-sizing: border-box; background: #f3f4f6; padding-bottom: 80px; }
-.gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-.card-hover { transition: all 0.3s ease; }
-.card-hover:active { transform: scale(0.98); }
-.earnings-card { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
-.task-card { background: linear-gradient(135deg, #059669 0%, #0d9488 100%); }
-.referral-card { background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%); }
-.video-card { background: linear-gradient(135deg, #7c2d12 0%, #a16207 100%); }
-.bottom-nav { backdrop-filter: blur(10px); background: rgba(255,255,255,0.95); }
-.nav-item { transition: all 0.2s ease; }
-.nav-item.active { color: #7c3aed; transform: scale(1.1); }
-.floating-action { position: fixed; bottom: 90px; right: 20px; z-index: 40; }
-.pulse { animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.7} }
-.swipe-indicator { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: swipe 2s infinite; }
-@keyframes swipe { 0%{transform:translateX(-100%)}100%{transform:translateX(100%)} }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RichRise Mini App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:active {
+            transform: scale(0.98);
+        }
+        .earnings-card {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+        .task-card {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+        }
+        .referral-card {
+            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+        }
+        .video-card {
+            background: linear-gradient(135deg, #7c2d12 0%, #a16207 100%);
+        }
+        .bottom-nav {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .nav-item {
+            transition: all 0.2s ease;
+        }
+        .nav-item.active {
+            color: #7c3aed;
+            transform: scale(1.1);
+        }
+        .floating-action {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 40;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .swipe-indicator {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: swipe 2s infinite;
+        }
+        @keyframes swipe {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .sidebar-item {
+            transition: all 0.2s ease;
+        }
+        .sidebar-item:hover {
+            background-color: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        .sidebar-item.active {
+            background-color: rgba(255,255,255,0.2);
+            border-right: 3px solid white;
+        }
+    </style>
 </head>
-<body>
-
-<!-- Header -->
-<header class="gradient-bg text-white py-4 shadow-lg sticky top-0 z-30">
-  <div class="px-4 flex justify-between items-center">
-    <div class="flex items-center space-x-3">
-      <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-        <span class="text-purple-600 font-bold text-sm">R</span>
-      </div>
-      <h1 class="text-xl font-bold">RichRise</h1>
-    </div>
-    <div class="text-right">
-      <div class="text-xs opacity-90">@User12897</div>
-      <div class="text-lg font-bold">֏8,000</div>
-    </div>
-  </div>
-</header>
-
-<main class="px-4 py-4 space-y-4">
-  <!-- Balance Card -->
-  <div class="earnings-card text-white rounded-2xl p-6 card-hover relative overflow-hidden">
-    <div class="swipe-indicator absolute inset-0 w-full h-full"></div>
-    <div class="relative z-10 flex justify-between items-center">
-      <div>
-        <h2 class="text-lg font-semibold opacity-90">Ընդհանուր մնացորդ</h2>
-        <p class="text-3xl font-bold">֏8,000</p>
-      </div>
-      <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-        <span class="text-2xl">💰</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Quick Stats -->
-  <div class="grid grid-cols-3 gap-3">
-    <div class="task-card text-white rounded-xl p-4 text-center card-hover">
-      <div class="text-2xl mb-1">📋</div>
-      <div class="text-lg font-bold">0</div>
-      <div class="text-xs opacity-90">Առաջադրանք</div>
-      <div class="text-xs opacity-75">֏2,000</div>
-    </div>
-    <div class="referral-card text-white rounded-xl p-4 text-center card-hover">
-      <div class="text-2xl mb-1">👥</div>
-      <div class="text-lg font-bold">0</div>
-      <div class="text-xs opacity-90">Հրավեր</div>
-      <div class="text-xs opacity-75">֏4,000</div>
-    </div>
-    <div class="video-card text-white rounded-xl p-4 text-center card-hover">
-      <div class="text-2xl mb-1">📺</div>
-      <div class="text-lg font-bold">0</div>
-      <div class="text-xs opacity-90">Տեսանյութ</div>
-      <div class="text-xs opacity-75">֏2,300</div>
-    </div>
-  </div>
-
-  <!-- Referral Section -->
-  <div class="bg-white rounded-2xl p-4 shadow-lg card-hover">
-    <h3 class="font-semibold text-gray-800 mb-3">Ձեր հրավերի հղումը</h3>
-    <div class="bg-gray-50 rounded-lg p-3 mb-3 break-all">https://t.me/richrisebot/app?startapp=r_8187899888</div>
-    <button onclick="copyReferralLink()" class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">📋 Կիսվել հղումով</button>
-  </div>
-
-  <!-- Action Cards -->
-  <div class="space-y-3">
-    <h3 class="text-lg font-bold text-gray-800">Գումար վաստակելու եղանակներ</h3>
-    <div class="bg-white rounded-xl p-4 shadow-lg card-hover" onclick="openTasks()">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center"><span class="text-xl">📱</span></div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-gray-800">Առաջադրանքներ</h4>
-          <p class="text-sm text-gray-600">Փորձարկեք հավելվածներ և խաղեր</p>
-          <p class="text-sm text-purple-600 font-semibold">Մինչև ֏2,000</p>
+<body class="min-h-full bg-gray-50 pb-20">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-4 shadow-lg sticky top-0 z-30">
+        <div class="px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                        <span class="text-purple-600 font-bold text-sm">R</span>
+                    </div>
+                    <h1 class="text-xl font-bold">RichRise</h1>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs opacity-90">...001</div>
+                    <div class="text-xs opacity-90">@User12897</div>
+                    <div class="text-xs opacity-90 mt-1">Ընդհանուր եկամուտներ</div>
+                    <div class="text-lg font-bold">֏8,000</div>
+                </div>
+            </div>
         </div>
-        <div class="text-gray-400">›</div>
-      </div>
+    </header>
+
+    <div class="flex min-h-full">
+        <!-- Sidebar for Desktop -->
+        <aside class="hidden md:block w-64 gradient-bg text-white shadow-lg">
+            <nav class="p-4">
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="sidebar-item active flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">🏠</span>
+                            <span>Գլխավոր</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">👥</span>
+                            <span>Հրավեր</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="sidebar-item flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">💰</span>
+                            <span>Հսկայական շահույթ</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">📋</span>
+                            <span>Առաջադրանքների Կենտրոն</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">📺</span>
+                            <span>Տեսանյութ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="sidebar-item flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">📊</span>
+                            <span>Ամենօրյա</span>
+                        </div>
+                        <div class="ml-9 text-sm opacity-90 -mt-1">Հաշվարկ և այլ</div>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">💵</span>
+                            <span>Կանխիկ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">💳</span>
+                            <span>Վճարում</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg">
+                            <span class="text-xl">❓</span>
+                            <span>FAQ</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 px-4 py-4 space-y-6" id="mainContent">
+            <!-- Balance Overview -->
+            <div class="earnings-card text-white rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+                <div class="swipe-indicator absolute inset-0 w-full h-full"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-lg font-semibold opacity-90">Մնացորդ</h2>
+                            <p class="text-4xl font-bold">֏8,000</p>
+                        </div>
+                        <div class="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                            <span class="text-3xl">💰</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings Stats Grid -->
+            <div class="grid grid-cols-3 gap-3">
+                <div class="task-card text-white rounded-2xl p-4 text-center card-hover shadow-lg">
+                    <div class="text-2xl mb-2">📋</div>
+                    <div class="text-lg font-bold">0</div>
+                    <div class="text-xs opacity-90 mb-1">Առաջադրանք</div>
+                    <div class="text-xs opacity-75">֏2,000 per task</div>
+                </div>
+
+                <div class="referral-card text-white rounded-2xl p-4 text-center card-hover shadow-lg">
+                    <div class="text-2xl mb-2">👥</div>
+                    <div class="text-lg font-bold">0</div>
+                    <div class="text-xs opacity-90 mb-1">Հրավիրված</div>
+                    <div class="text-xs opacity-75">֏4,000 per referral</div>
+                </div>
+
+                <div class="video-card text-white rounded-2xl p-4 text-center card-hover shadow-lg">
+                    <div class="text-2xl mb-2">📺</div>
+                    <div class="text-lg font-bold">0</div>
+                    <div class="text-xs opacity-90 mb-1">Տեսանյութ</div>
+                    <div class="text-xs opacity-75">֏2,300 per video</div>
+                </div>
+            </div>
+
+            <!-- Total Earnings Card -->
+            <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white rounded-3xl p-6 shadow-2xl">
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold opacity-90 mb-2">Ընդհանուր եկամուտ</h3>
+                    <div class="text-5xl font-bold mb-4">֏8,000</div>
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center mx-auto backdrop-blur-sm">
+                        <span class="text-3xl">💎</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Section -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100">
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <span class="text-3xl text-white">🔗</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Ձեր հաշվետվության հղումը</h3>
+                    <div class="bg-gray-50 rounded-2xl p-4 mb-4">
+                        <p class="text-sm text-gray-600 break-all font-mono">https://t.me/richrisebot/app?startapp=r_8187899888</p>
+                    </div>
+                    <button onclick="copyReferralLink()" class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all duration-300">
+                        📋 Կիսվել
+                    </button>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 border border-green-200">
+                    <h4 class="font-bold text-green-800 mb-3">Բացեք հսկայական եկամտի ներուժը հաշվետվություններով</h4>
+                    <p class="text-sm text-green-700 mb-4">Ընդլայնեք Ձեր եկամտի հորիզոնները RichRise-ով՝ հաշվետվություն կատարելով Ձեր ընկերներին, ընտանիքին կամ հետևորդներին մեր հարթակ:</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-green-600">✓</span>
+                            <span class="text-sm text-green-800">Վաստակեք լրացուցիչ ֏4,000 յուրաքանչյուր հաջող գրանցման համար</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-green-600">✓</span>
+                            <span class="text-sm text-green-800">Ստացեք 10% բոնուս Ձեր հրավիրած օգտատերերի եկամուտներից</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earning Methods -->
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Կատարվող գործողություններ</h2>
+                <p class="text-gray-600 mb-6">Ամեն օր գումար վաստակելու բազմաթիվ եղանակներ կան:</p>
+
+                <!-- Apps & Games Card -->
+                <div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300" onclick="switchTab('center')">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <span class="text-2xl text-white">📱</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Փորձարկեք հավելվածներ և խաղեր</h3>
+                            <p class="text-gray-600 text-sm mb-2">Վաստակեք գումար՝ փորձարկելով անվճար հավելվածներ և խաղեր, ինչպես նաև կիսվելով Ձեր կարծիքով</p>
+                            <button class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-xl font-semibold text-sm">
+                                Ավարտեք առաջադրանքները
+                            </button>
+                        </div>
+                        <div class="text-gray-400 text-2xl">›</div>
+                    </div>
+                </div>
+
+                <!-- Referral Card -->
+                <div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300" onclick="switchTab('referral')">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <span class="text-2xl text-white">👥</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Հաշվետվություն ընկերոջը</h3>
+                            <p class="text-gray-600 text-sm mb-2">Հրավիրեք Ձեր ընկերներին և վաստակեք ֏4,000 յուրաքանչյուր հաշվետվության համար</p>
+                            <button class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-xl font-semibold text-sm">
+                                Հրավիրեք հիմա
+                            </button>
+                        </div>
+                        <div class="text-gray-400 text-2xl">›</div>
+                    </div>
+                </div>
+
+                <!-- Video Card -->
+                <div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300" onclick="switchTab('video')">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <span class="text-2xl text-white">📺</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Դիտեք տեսանյութ</h3>
+                            <p class="text-gray-600 text-sm mb-2">Դիտեք տեսանյութեր և վաստակեք ֏2,300 յուրաքանչյուր տեսանյութի համար</p>
+                            <button class="bg-gradient-to-r from-red-600 to-pink-600 text-white px-6 py-2 rounded-xl font-semibold text-sm">
+                                Դիտեք տեսանյութ
+                            </button>
+                        </div>
+                        <div class="text-gray-400 text-2xl">›</div>
+                    </div>
+                </div>
+
+                <!-- Daily Goals Card -->
+                <div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300" onclick="openDailyGoals()">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <span class="text-2xl text-white">🎯</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Ամենօրյա նպատակներ</h3>
+                            <p class="text-gray-600 text-sm mb-2">Գումար վաստակեք՝ հասնելով հաշվետվությունների նպատակին</p>
+                            <button class="bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-6 py-2 rounded-xl font-semibold text-sm">
+                                Հասեք նպատակներին
+                            </button>
+                        </div>
+                        <div class="text-gray-400 text-2xl">›</div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <div class="bg-white rounded-xl p-4 shadow-lg card-hover" onclick="openReferrals()">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"><span class="text-xl">👥</span></div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-gray-800">Հրավիրեք ընկերներին</h4>
-          <p class="text-sm text-gray-600">Ստացեք բոնուս յուրաքանչյուր հրավերի համար</p>
-          <p class="text-sm text-green-600 font-semibold">֏4,000 + 10%</p>
+    <!-- Floating Action Button -->
+    <div class="floating-action">
+        <button onclick="showQuickActions()" class="w-14 h-14 bg-purple-600 text-white rounded-full shadow-lg hover:bg-purple-700 transition-all pulse">
+            <span class="text-xl">⚡</span>
+        </button>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav fixed bottom-0 left-0 right-0 border-t border-gray-200 z-50 md:hidden">
+        <div class="grid grid-cols-5 py-2">
+            <button class="nav-item active flex flex-col items-center py-2" onclick="switchTab('home')">
+                <span class="text-xl mb-1">🏠</span>
+                <span class="text-xs">Գլխավոր</span>
+            </button>
+            <button class="nav-item flex flex-col items-center py-2" onclick="switchTab('referral')">
+                <span class="text-xl mb-1">👥</span>
+                <span class="text-xs">Հրավեր</span>
+            </button>
+            <button class="nav-item flex flex-col items-center py-2" onclick="switchTab('center')">
+                <span class="text-xl mb-1">📋</span>
+                <span class="text-xs">Կենտրոն</span>
+            </button>
+            <button class="nav-item flex flex-col items-center py-2" onclick="switchTab('video')">
+                <span class="text-xl mb-1">📺</span>
+                <span class="text-xs">Տեսանյութ</span>
+            </button>
+            <button class="nav-item flex flex-col items-center py-2" onclick="switchTab('cash')">
+                <span class="text-xl mb-1">💵</span>
+                <span class="text-xs">Կանխիկ</span>
+            </button>
         </div>
-        <div class="text-gray-400">›</div>
-      </div>
-    </div>
+    </nav>
 
-    <div class="bg-white rounded-xl p-4 shadow-lg card-hover" onclick="openVideos()">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center"><span class="text-xl">📺</span></div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-gray-800">Դիտեք տեսանյութեր</h4>
-          <p class="text-sm text-gray-600">Վաստակեք գումար տեսանյութեր դիտելիս</p>
-          <p class="text-sm text-red-600 font-semibold">֏2,300</p>
+    <!-- Welcome Modal -->
+    <div id="welcomeModal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-6">
+        <div class="glass-card rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <span class="text-3xl text-white icon-glow">🎉</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-3">Բարի գալուստ RichRise!</h3>
+            <p class="text-xl text-green-600 font-bold mb-4">Շնորհավորում ենք ֏8,000 բոնուս!</p>
+            <p class="text-sm text-gray-600 mb-8 leading-relaxed">Սկսեք վաստակել գումար հիմա՝ կատարելով պարզ առաջադրանքներ</p>
+            <button onclick="closeWelcomeModal()" class="btn-primary w-full text-white py-4 rounded-2xl font-bold text-lg">
+                Սկսենք! 🚀
+            </button>
         </div>
-        <div class="text-gray-400">›</div>
-      </div>
     </div>
 
-    <div class="bg-white rounded-xl p-4 shadow-lg card-hover" onclick="openDailyGoals()">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center"><span class="text-xl">🎯</span></div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-gray-800">Ամենօրյա նպատակներ</h4>
-          <p class="text-sm text-gray-600">Կատարեք ամենօրյա առաջադրանքները</p>
-          <p class="text-sm text-yellow-600 font-semibold">Բոնուս պարգևներ</p>
+    <!-- Quick Actions Modal -->
+    <div id="quickActionsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-end justify-center z-50">
+        <div class="bg-white rounded-t-2xl p-6 w-full max-w-md">
+            <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4"></div>
+            <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">Արագ գործողություններ</h3>
+            <div class="space-y-3">
+                <button onclick="copyReferralLink(); closeQuickActions();" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold">
+                    📋 Կիսվել հղումով
+                </button>
+                <button onclick="openTasks(); closeQuickActions();" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold">
+                    📱 Նոր առաջադրանք
+                </button>
+                <button onclick="openVideos(); closeQuickActions();" class="w-full bg-red-600 text-white py-3 rounded-lg font-semibold">
+                    📺 Դիտել տեսանյութ
+                </button>
+                <button onclick="closeQuickActions()" class="w-full bg-gray-300 text-gray-700 py-3 rounded-lg font-semibold">
+                    Փակել
+                </button>
+            </div>
         </div>
-        <div class="text-gray-400">›</div>
-      </div>
     </div>
-  </div>
 
-  <!-- Bonus Info -->
-  <div class="bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl p-4 border border-purple-200">
-    <div class="flex items-center space-x-3 mb-2">
-      <span class="text-2xl">🎉</span>
-      <h3 class="font-bold text-purple-800">Բոնուս ծրագիր</h3>
-    </div>
-    <p class="text-sm text-purple-700">Ստացեք ֏300,000 բոնուս նոր անդամակցության համար!</p>
-  </div>
-</main>
+    <script>
+        function closeWelcomeModal() {
+            document.getElementById('welcomeModal').style.display = 'none';
+        }
 
-<!-- Floating Action -->
-<div class="floating-action">
-  <button onclick="showQuickActions()" class="w-14 h-14 bg-purple-600 text-white rounded-full shadow-lg hover:bg-purple-700 transition-all pulse"><span class="text-xl">⚡</span></button>
-</div>
+        function closeHelpGuide() {
+            event.target.closest('.bg-blue-50').style.display = 'none';
+        }
 
-<!-- Bottom Navigation -->
-<nav class="bottom-nav fixed bottom-0 left-0 right-0 border-t border-gray-200 z-50">
-  <div class="grid grid-cols-5 py-2">
-    <button class="nav-item active flex flex-col items-center py-2" onclick="switchTab('home')"><span class="text-xl mb-1">🏠</span><span class="text-xs">Գլխավոր</span></button>
-    <button class="nav-item flex flex-col items-center py-2" onclick="switchTab('referral')"><span class="text-xl mb-1">👥</span><span class="text-xs">Հրավեր</span></button>
-    <button class="nav-item flex flex-col items-center py-2" onclick="switchTab('center')"><span class="text-xl mb-1">📋</span><span class="text-xs">Կենտրոն</span></button>
-    <button class="nav-item flex flex-col items-center py-2" onclick="switchTab('video')"><span class="text-xl mb-1">📺</span><span class="text-xs">Տեսանյութ</span></button>
-    <button class="nav-item flex flex-col items-center py-2" onclick="switchTab('cash')"><span class="text-xl mb-1">💵</span><span class="text-xs">Կանխիկ</span></button>
-  </div>
-</nav>
+        function copyReferralLink() {
+            const link = 'https://t.me/richrisebot/app?startapp=r_8187899888';
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'RichRise - Վաստակեք գումար',
+                    text: 'Միացեք RichRise-ին և վաստակեք գումար!',
+                    url: link
+                });
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(link).then(() => {
+                    showToast('Հղումը պատճենվել է! 📋');
+                });
+            } else {
+                showToast('Հղումը պատճենվել է! 📋');
+            }
+        }
 
-<!-- Welcome Modal -->
-<div id="welcomeModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center">
-    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-      <span class="text-2xl">🎉</span>
-    </div>
-    <h3 class="text-xl font-bold text-gray-800 mb-2">Բարի գալուստ RichRise!</h3>
-    <p class="text-lg text-green-600 font-semibold mb-4">Շնորհավորում ենք ֏8,000 բոնուս!</p>
-    <p class="text-sm text-gray-600 mb-6">Սկսեք վաստակել գումար հիմա՝ կատարելով պարզ առաջադրանքներ</p>
-    <button onclick="closeWelcomeModal()" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors font-semibold">Սկսենք! 🚀</button>
-  </div>
-</div>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-20 left-4 right-4 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 text-center';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 2000);
+        }
 
-<!-- Quick Actions Modal -->
-<div id="quickActionsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-end justify-center z-50">
-  <div class="bg-white rounded-t-2xl p-6 w-full max-w-md">
-    <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4"></div>
-    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">Արագ գործողություններ</h3>
-    <div class="space-y-3">
-      <button onclick="copyReferralLink(); closeQuickActions();" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold">📋 Կիսվել հղումով</button>
-      <button onclick="openTasks(); closeQuickActions();" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold">📱 Նոր առաջադրանք</button>
-      <button onclick="openVideos(); closeQuickActions();" class="w-full bg-red-600 text-white py-3 rounded-lg font-semibold">📺 Դիտել տեսանյութ</button>
-      <button onclick="closeQuickActions()" class="w-full bg-gray-300 text-gray-700 py-3 rounded-lg font-semibold">Փակել</button>
-    </div>
-  </div>
-</div>
+        function switchTab(tab) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            event.currentTarget.classList.add('active');
+            
+            // Show appropriate content based on tab
+            const mainContent = document.getElementById('mainContent');
+            
+            if (tab === 'cash') {
+                // Already showing cash content
+                return;
+            } else if (tab === 'home') {
+                // Show home content
+                mainContent.innerHTML = `
+                    <!-- Balance Card -->
+                    <div class="earnings-card text-white rounded-2xl p-6 card-hover relative overflow-hidden">
+                        <div class="swipe-indicator absolute inset-0 w-full h-full"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h2 class="text-lg font-semibold opacity-90">Ընդհանուր մնացորդ</h2>
+                                    <p class="text-3xl font-bold">֏8,000</p>
+                                </div>
+                                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                                    <span class="text-2xl">💰</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-<script>
-function closeWelcomeModal(){document.getElementById('welcomeModal').style.display='none';}
-function copyReferralLink(){
-  const link='https://t.me/richrisebot/app?startapp=r_8187899888';
-  if(navigator.share){navigator.share({title:'RichRise - Վաստակեք գումար',text:'Միացեք RichRise-ին և վաստակեք գումար!',url:link});}
-  else if(navigator.clipboard){navigator.clipboard.writeText(link).then(()=>{showToast('Հղումը պատճենվել է! 📋');});}
-  else{showToast('Հղումը պատճենվել է! 📋');}
-}
-function showToast(msg){
-  const toast=document.createElement('div');toast.className='fixed top-20 left-4 right-4 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 text-center';toast.textContent=msg;document.body.appendChild(toast);
-  setTimeout(()=>{toast.style.opacity='0';toast.style.transform='translateY(-20px)';setTimeout(()=>document.body.removeChild(toast),300);},2000);
-}
-function switchTab(tab){document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));event.currentTarget.classList.add('active');showToast(`Բացվում է ${tab} բաժինը...`);}
-function openTasks(){showToast('Բացվում են առաջադրանքները... 📱');}
-function openReferrals(){showToast('Բացվում է հրավերների բաժինը... 👥');}
-function openVideos(){showToast('Բացվում են տեսանյութերը... 📺');}
-function openDailyGoals(){showToast('Բացվում են ամենօրյա նպատակները... 🎯');}
-function showQuickActions(){document.getElementById('quickActionsModal').classList.remove('hidden');document.getElementById('quickActionsModal').classList.add('flex');}
-function closeQuickActions(){document.getElementById('quickActionsModal').classList.add('hidden');document.getElementById('quickActionsModal').classList.remove('flex');}
-let startY=0;document.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;});
-document.addEventListener('touchend',e=>{const endY=e.changedTouches[0].clientY;const diff=startY-endY;if(diff>50&&startY>window.innerHeight*0.8){showQuickActions();}});
-document.getElementById('quickActionsModal').addEventListener('click',e=>{if(e.target===this){closeQuickActions();}});
-function vibrate(){if(navigator.vibrate){navigator.vibrate(50);}}
-document.querySelectorAll('button').forEach(btn=>{btn.addEventListener('click',vibrate);});
-</script>
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="task-card text-white rounded-xl p-4 text-center card-hover">
+                            <div class="text-2xl mb-1">📋</div>
+                            <div class="text-lg font-bold">0</div>
+                            <div class="text-xs opacity-90">Առաջադրանք</div>
+                            <div class="text-xs opacity-75">֏2,000</div>
+                        </div>
 
-</body>
+                        <div class="referral-card text-white rounded-xl p-4 text-center card-hover">
+                            <div class="text-2xl mb-1">👥</div>
+                            <div class="text-lg font-bold">0</div>
+                            <div class="text-xs opacity-90">Հրավեր</div>
+                            <div class="text-xs opacity-75">֏4,000</div>
+                        </div>
+
+                        <div class="video-card text-white rounded-xl p-4 text-center card-hover">
+                            <div class="text-2xl mb-1">📺</div>
+                            <div class="text-lg font-bold">0</div>
+                            <div class="text-xs opacity-90">Տեսանյութ</div>
+                            <div class="text-xs opacity-75">֏2,300</div>
+                        </div>
+                    </div>
+
+                    <!-- Action Cards -->
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-bold text-gray-800">Գումար վաստակելու եղանակներ</h3>
+                        
+                        <div class="bg-white rounded-xl p-4 shadow-lg card-hover" onclick="openTasks()">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <span class="text-xl">📱</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800">Առաջադրանքներ</h4>
+                                    <p class="text-sm text-gray-600">Փորձարկեք հավելվածներ և խաղեր</p>
+                                    <p class="text-sm text-purple-600 font-semibold">Մինչև ֏2,000</p>
+                                </div>
+                                <div class="text-gray-400">›</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-4 shadow-lg card-hover" onclick="openReferrals()">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                    <span class="text-xl">👥</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800">Հրավիրեք ընկերներին</h4>
+                                    <p class="text-sm text-gray-600">Ստացեք բոնուս յուրաքանչյուր հրավերի համար</p>
+                                    <p class="text-sm text-green-600 font-semibold">֏4,000 + 10%</p>
+                                </div>
+                                <div class="text-gray-400">›</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                showToast(`Բացվում է ${tab} բաժինը...`);
+            }
+        }
+
+        function openTasks() {
+            showToast('Բացվում են առաջադրանքները... 📱');
+        }
+
+        function openReferrals() {
+            showToast('Բացվում է հրավերների բաժինը... 👥');
+        }
+
+        function openVideos() {
+            showToast('Բացվում են տեսանյութերը... 📺');
+        }
+
+        function openDailyGoals() {
+            showToast('Բացվում են ամենօրյա նպատակները... 🎯');
+        }
+
+        function editPaymentMethod() {
+            showToast('Բացվում է վճարման եղանակների խմբագրումը... 💳');
+        }
+
+        function startTask(taskId) {
+            const tasks = {
+                1: { name: 'TikTok', reward: '֏2,000', time: '5 րոպե' },
+                2: { name: 'Subway Surfers', reward: '֏1,500', time: '10 րոպե' },
+                3: { name: 'YouTube', reward: '֏1,000', time: '8 րոպե' },
+                4: { name: 'Instagram', reward: '֏800', time: '3 րոպե' }
+            };
+            
+            const task = tasks[taskId];
+            showTaskModal(task);
+        }
+
+        function showTaskModal(task) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-4';
+            modal.innerHTML = `
+                <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl">
+                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <span class="text-3xl text-white">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">${task.name} առաջադրանք</h3>
+                    <p class="text-lg text-green-600 font-bold mb-2">Վարձատրություն: ${task.reward}</p>
+                    <p class="text-sm text-gray-600 mb-6">Ժամանակ: ${task.time}</p>
+                    <div class="space-y-3">
+                        <button onclick="completeTask('${task.name}', '${task.reward}'); closeTaskModal();" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-2xl font-bold">
+                            Կատարել առաջադրանքը
+                        </button>
+                        <button onclick="closeTaskModal()" class="w-full bg-gray-200 text-gray-700 py-3 rounded-2xl font-semibold">
+                            Փակել
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeTaskModal();
+                }
+            });
+        }
+
+        function closeTaskModal() {
+            const modal = document.querySelector('.fixed.inset-0.bg-black.bg-opacity-60');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
+
+        function completeTask(taskName, reward) {
+            showToast(`${taskName} առաջադրանքը կատարվել է! Ստացել եք ${reward} 🎉`);
+            
+            // Simulate task completion with a delay
+            setTimeout(() => {
+                showToast('Գումարը ավելացվել է Ձեր հաշվին! 💰');
+            }, 2000);
+        }
+
+        function showQuickActions() {
+            document.getElementById('quickActionsModal').classList.remove('hidden');
+            document.getElementById('quickActionsModal').classList.add('flex');
+        }
+
+        function closeQuickActions() {
+            document.getElementById('quickActionsModal').classList.add('hidden');
+            document.getElementById('quickActionsModal').classList.remove('flex');
+        }
+
+        // Touch gestures for mobile
+        let startY = 0;
+        document.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const endY = e.changedTouches[0].clientY;
+            const diff = startY - endY;
+            
+            // Swipe up to show quick actions
+            if (diff > 50 && startY > window.innerHeight * 0.8) {
+                showQuickActions();
+            }
+        });
+
+        // Close modals when clicking outside
+        document.getElementById('quickActionsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeQuickActions();
+            }
+        });
+
+        // Haptic feedback simulation for supported devices
+        function vibrate() {
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        // Add vibration to button clicks
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', vibrate);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992bb1c3a1feddd0',t:'MTc2MTE2NDQxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
 
